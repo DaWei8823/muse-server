@@ -18,9 +18,16 @@ export class AuthController {
         console.log(req.user);
         const jwt: string = req.user.jwt;
         if (jwt)
-            res.redirect('http://localhost:4200/login/succes/' + jwt);
+            res.redirect('http://localhost:4200/login?jwt=' + jwt);
         else 
             res.redirect('http://localhost:4200/login/failure');
+    }
+
+    @Get('protected')
+    @UseGuards(AuthGuard('jwt'))
+    protectedResource()
+    {
+        return 'JWT is working!';
     }
 
 }
