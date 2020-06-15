@@ -15,7 +15,6 @@ export class AuthController {
     @UseGuards(AuthGuard('google'))
     googleLoginCallback(@Req() req, @Res() res)
     {
-        console.log(req.user);
         const jwt: string = req.user.jwt;
         if (jwt)
             res.redirect('http://localhost:4200/login?jwt=' + jwt);
@@ -25,9 +24,9 @@ export class AuthController {
 
     @Get('protected')
     @UseGuards(AuthGuard('jwt'))
-    protectedResource()
+    protectedResource(@Req() req)
     {
-        return 'JWT is working!';
+        return req.user
     }
 
 }

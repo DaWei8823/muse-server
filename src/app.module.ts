@@ -7,7 +7,7 @@ import { AuthController } from './auth/auth.controller';
 import { UserService } from './user/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './entities/user.entity';
-import { OathLogin } from './entities/oath-login.entity';
+import { OauthLogin } from './entities/oauth-login.entity';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -17,7 +17,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot({
       type : 'sqlite',
       database: 'muse.db',
-      entities: [User, OathLogin],
+      entities: [User, OauthLogin],
       synchronize: true
     }),
     UserModule

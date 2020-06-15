@@ -11,8 +11,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
     
     constructor(
         private readonly configService:ConfigService, 
-        private readonly authService:AuthService,
-        private readonly userService:UserService
+        private readonly authService:AuthService
         )
     {
         super({
@@ -29,8 +28,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
     {
         try
         {
-            console.log(profile);
-            console.log(`DisplayName: ${profile.name}`)
+            console.log("UPDATING OAUTH USER")       
+            
+            await this.authService.updateOauthUser(profile.id, Provider.GOOGLE, profile._json.name, profile._json.email_verified ?  profile._json.email : null , profile._json.picture);
+
             const jwt: string = await this.authService.validateOAuthLogin(profile.id, Provider.GOOGLE)
             const user = 
             {
@@ -41,7 +42,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
         }
         catch(err)
         {
-            // console.log(err)
             done(err, false);
         }
     }

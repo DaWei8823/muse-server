@@ -12,11 +12,6 @@ export class User{
     email:string;
     
     @Column()
-    pictureUrl:string;
+    pictureUrl?:string;
     
-    @Column()
-    firstName:string;
-
-    @Column()
-    lastName:string;
 }

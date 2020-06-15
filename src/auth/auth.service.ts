@@ -15,17 +15,18 @@ export class AuthService {
   
     constructor(private readonly configurationService:ConfigService, private readonly usersService: UserService){ };
 
+    async updateOauthUser(thirdPartyId:string, provider:Provider, username:string, email:string, pictureUrl:string){
+        this.usersService.updateOAuthUser(provider, thirdPartyId, username, email, pictureUrl)
+    }
+
     async validateOAuthLogin(thirdPartyId:string, provider:Provider) : Promise<string> 
     {
         try 
         {
 
-            let user : User = await this.usersService.findOneByThirdPartyId(provider, thirdPartyId);
+            let userId = (await this.usersService.findOneByThirdPartyId(provider, thirdPartyId)).userId;
             
-            if (!user)
-                user = await this.usersService.registerOAuthUser(provider, thirdPartyId);
-
-            let userId = user.userId
+            console.log(`UserId: ${userId}`)
             
             const payload = {
                 userId
